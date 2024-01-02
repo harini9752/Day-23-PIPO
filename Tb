@@ -1,0 +1,63 @@
+`timescale 1ns / 1ps
+//////////////////////////////////////////////////////////////////////////////////
+// Company: 
+// Engineer: 
+// 
+// Create Date: 01/02/2024 12:59:15 PM
+// Design Name: 
+// Module Name: tb
+// Project Name: 
+// Target Devices: 
+// Tool Versions: 
+// Description: 
+// 
+// Dependencies: 
+// 
+// Revision:
+// Revision 0.01 - File Created
+// Additional Comments:
+// 
+//////////////////////////////////////////////////////////////////////////////////
+
+
+module tb();
+
+  wire [3:0] Q;
+  reg [3:0] RESET;
+  reg CLK;
+  
+  Pipo inst1(.clk(CLK),.reset(RESET),.q(Q));
+  
+  initial
+    begin
+      CLK=0;
+      forever
+        #1 CLK=~CLK;
+    end
+  
+  initial
+    begin
+      $monitor("CLK=%B RESET=%B  Q=%B  TIME=%0T",CLK,RESET,Q,$time);
+      
+      RESET=4'b0;
+      #10;
+      RESET=4'b1110;
+      #10;
+      RESET=4'b1100;
+      #10;
+      RESET=4'b1001;
+      #10;
+      RESET=4'b0011;
+      #10;
+      RESET=4'b1;
+      
+      
+    end
+  
+  initial
+    begin
+      $dumpfile("dump.vcd");
+      $dumpvars();
+      #55 $finish;
+    end
+endmodule
